@@ -9,7 +9,7 @@ function Clock() {
   useEffect(() => {
     const intervalClickId = setInterval(setTime(new Date()), 1000);
     return clearInterval(intervalClickId);
-  }, [time]);
+  }, []);
   return (
     <ClockWrap>
       <Tb24Hours style={{ width: '1.5em', height: '1.5em' }} />
