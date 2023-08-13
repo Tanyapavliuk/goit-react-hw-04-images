@@ -16,9 +16,14 @@ function ImageGallery({ searchName }) {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState('idle');
+  const [secondFetch, setSecondFetch] = useState(1);
 
   useEffect(() => {
+    if (!searchName) {
+      return;
+    }
     const getAsyncFetch = async () => {
+      setSecondFetch(1);
       setData([]);
       setTotal(0);
       setPage(1);
@@ -40,6 +45,9 @@ function ImageGallery({ searchName }) {
   }, [searchName]);
 
   useEffect(() => {
+    if (secondFetch === 1) {
+      return;
+    }
     const getAsyncFetch = async () => {
       getFetch({
         search: searchName,
@@ -51,10 +59,11 @@ function ImageGallery({ searchName }) {
         .catch(er => setStatus('rejected'));
     };
     getAsyncFetch();
-  }, [page]);
+  }, [page, secondFetch]);
 
   const handleClickButtonMore = () => {
     setPage(prevState => prevState + 1);
+    setSecondFetch(2);
   };
 
   const Items = data.length ? (
